@@ -61,3 +61,5 @@ end
 gem 'simple_form'
 
 gem 'will_paginate'
+
+gem "font-awesome-rails"
