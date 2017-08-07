@@ -34,7 +34,13 @@ class PlacesController < ApplicationController
 
     # send user back to the root path
     redirect_to root_path
-  end  
+  end
+
+  def destroy
+    @place = Place.find(params[:id])
+    @place.destroy
+    redirect_to root_path
+  end
 
   private
 
