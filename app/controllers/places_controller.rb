@@ -11,9 +11,14 @@ class PlacesController < ApplicationController
 
   def create
     # Send this info to the database to make a new one
-    current_user.places.create(place_params)
-    # After the create, reroute to the root index page
-    redirect_to root_path
+    @place = current_user.places.create(place_params)
+
+    if @place.valid?
+      # After the create, reroute to the root index page
+      redirect_to root_path
+    else
+      render :new, status: :unprocessable_entity
+    end    
   end
 
   def show
@@ -40,8 +45,12 @@ class PlacesController < ApplicationController
     # Update and save to the db
     @place.update_attributes(place_params)
 
-    # send user back to the root path
-    redirect_to root_path
+    if @place.valid?
+      # send user back to the root path
+      redirect_to root_path
+    else
+      render :edit, status: :unprocessable_entity
+    end    
   end
 
   def destroy
@@ -50,7 +59,7 @@ class PlacesController < ApplicationController
     if @place.user != current_user
       return render text: 'Not allowed', status: :forbidden
     end
-    
+
     @place.destroy
     redirect_to root_path
   end
