@@ -25,6 +25,17 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
   end
 
+  def update
+    # Find the record the user wants to update
+    @place = Place.find(params[:id])
+
+    # Update and save to the db
+    @place.update_attributes(place_params)
+
+    # send user back to the root path
+    redirect_to root_path
+  end  
+
   private
 
   def place_params
